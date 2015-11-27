@@ -10,4 +10,5 @@ This project contains very simple Akka examples to show the basics of using Akka
 ## Examples
 
 * `AskExample` - simple example showing the ask pattern.
+* `InboxExample` - simple example showing the use of `Inbox`.
 * `PingPong` - simple example showing two actors sending messages to each other and stopping after a while.

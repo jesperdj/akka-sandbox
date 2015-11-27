@@ -17,16 +17,17 @@ package com.jesperdj.akkasandbox
 
 import java.util.concurrent.TimeUnit
 
-import akka.actor.{Actor, ActorSystem, Props}
+import akka.actor.ActorSystem
 import akka.pattern.ask
 import akka.util.Timeout
+import com.jesperdj.akkasandbox.HelloActor.{HelloRequest, HelloResponse}
 
 import scala.concurrent.Await
 
 object AskExample extends App {
-  val system = ActorSystem("Hello")
+  val system = ActorSystem("AskExample")
 
-  val actor = system.actorOf(Props[HelloActor])
+  val actor = system.actorOf(HelloActor.props)
 
   // The '?' used below creates a temporary actor, which must be stopped when it's done.
   // This implicit timeout is used by '?' for stopping the temporary actor.
@@ -41,13 +42,4 @@ object AskExample extends App {
 
   // Terminate the actor system
   Await.ready(system.terminate(), Timeout(3, TimeUnit.SECONDS).duration)
-}
-
-case class HelloRequest(name: String)
-case class HelloResponse(message: String)
-
-class HelloActor extends Actor {
-  def receive = {
-    case HelloRequest(name) ⇒ sender ! HelloResponse(s"Hello, $name")
-  }
 }
