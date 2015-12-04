@@ -37,7 +37,7 @@ object AskExample extends App {
   val future = actor ? HelloRequest("World")
 
   // Wait for the future to be completed and get the response
-  val response = Await.result(future, Timeout(1, TimeUnit.SECONDS).duration).asInstanceOf[HelloResponse]
+  val response = Await.result(future.mapTo[HelloResponse], Timeout(1, TimeUnit.SECONDS).duration)
   println(response.message)
 
   // Terminate the actor system
